@@ -14,7 +14,7 @@ RSpec.describe Food, type: :model do
   it 'is invalid without a name' do
     food = Food.new(
       name: nil,
-      description: 'Betawi style steamed rice cooked in coconut milk. Delicious!',
+      description: 'Indonesian rice cooked with coconut milk and turmeric.',
       price: 20000.0
     )
 
@@ -23,10 +23,28 @@ RSpec.describe Food, type: :model do
     expect(food.errors[:name]).to include("can't be blank")
   end
 
+  it "is invalid with a duplicate name" do
+    food1 = Food.create(
+      name: "Nasi Kuning",
+      description: "Indonesian rice cooked with coconut milk and turmeric.",
+      price: 20000.0
+    )
+    
+    food2 = Food.new(
+      name: "Nasi Kuning",
+      description: "Just with a different description.",
+      price: 20000.0
+    )
+
+    food2.valid?
+    
+    expect(food2.errors[:name]).to include("has already been taken")
+  end
+
   it 'is invalid without a price' do
     food = Food.new(
       name: 'Nasi Kuning',
-      description: 'Betawi style steamed rice cooked in coconut milk. Delicious!',
+      description: 'Indonesian rice cooked with coconut milk and turmeric.',
       price: nil
     )
 
