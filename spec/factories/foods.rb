@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :food do
-    name { "Nasi Kuning" }
-    description { "Indonesian rice cooked with coconut milk and turmeric." }
+    name { Faker::Food.dish }
+    description { Faker::Food.description }
     price { 20000.0 }
   end
 end
